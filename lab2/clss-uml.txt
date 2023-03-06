@@ -1,0 +1,72 @@
+@startuml
+' UML legend:
+' table = class
+' #pkey
+' -fkey
+' +index
+
+class Voyage {
+==
+  #Id: int
+  -VoyageNumber: string
+  DateDeparture: Date
+  -BusId: int
+  -DriverId: int
+  AvailableTickets: int
+  DateTimeStamp: Date
+==
+}
+
+class DefaultVoyage {
+  ==
+    #VoyageNumber: string
+    TimeDeparture: Date
+    EndTimeDeparture: Date
+    Days: int
+  ==
+}
+
+class Bus {
+  ==
+    #BusId: int
+    LicensePlate: string
+    SitPlaces: int
+    Broken: bool
+  ==
+}
+
+class Driver {
+  ==
+    #DriverId: int
+    FirstName: string
+    SecondName: string
+    ThirdName: string
+    Illness: bool
+  ==
+}
+
+class Users {
+  ==
+    #Id: int
+    Login: string
+    Password: string
+    -RoleId: int
+  ==
+}
+
+
+class Roles {
+  ==
+    #Id: int
+    Role: string
+  ==
+}
+
+
+
+DefaultVoyage --* Voyage
+Bus --* Voyage
+Driver --* Voyage
+Roles --* Users
+
+@enduml
