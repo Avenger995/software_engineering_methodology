@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import VoyageSerializer
 from .models import Voyage
 
-# Create your views here.
 
+class VoyageAPIView(APIView):
 
-class VoyageAPIView(generics.ListAPIView):
-    queryset = Voyage.objects.all()
-    serializer_class = VoyageSerializer
+    def get(self, request):
+        w = Voyage.objects.all()
+        return Response(VoyageSerializer(w, many=True).data)
+
