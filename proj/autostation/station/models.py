@@ -3,8 +3,8 @@ from django.db import models
 
 class DefaultVoyage(models.Model):
     voyage_number = models.CharField(max_length=255)
-    time_departure = models.DateTimeField()
-    end_time_departure = models.DateTimeField()
+    time_departure = models.TimeField()
+    end_time_departure = models.TimeField()
     days = models.PositiveSmallIntegerField()
     is_active = models.BooleanField(default=True)
 
@@ -37,10 +37,10 @@ class Voyage(models.Model):
     date_departure = models.DateField()
     bus_id = models.ForeignKey('Bus', on_delete=models.PROTECT, null=False)
     driver_id = models.ForeignKey('Driver', on_delete=models.PROTECT, null=False)
-    availableTickets = models.PositiveSmallIntegerField()
+    available_tickets = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return self.voyage_number
+        return str(self.voyage_number)
 
 
 
