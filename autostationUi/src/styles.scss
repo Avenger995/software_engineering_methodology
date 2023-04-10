@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+@include mat.core();
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+.ok-button {
+    font-size: large;
+    height: 50rem;
+    width: 15rem;
+    border-radius: 25%;
+}
+
+.mat-mdc-unelevated-button.mat-primary {
+    --mdc-filled-button-container-color: #0d6e06;
+    --mdc-filled-button-label-text-color: #fff;
+}
+
+.mat-mdc-button.mat-mdc-button-base, .mat-mdc-raised-button.mat-mdc-button-base, .mat-mdc-unelevated-button.mat-mdc-button-base, .mat-mdc-outlined-button.mat-mdc-button-base {
+    height: 64px;
+}
+

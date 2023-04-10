@@ -1,17 +1,26 @@
+from abc import ABC
+
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import DefaultVoyage, Bus, Driver
+from .models import DefaultVoyage, Bus, Driver, Voyage
 
 
-class VoyageSerializer(serializers.Serializer):
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        groups = self.user.groups.values_list('name', flat=True)
+        data['groups'] = groups
+        return data
+
+
+class VoyageSerializer(serializers.ModelSerializer):
     voyage_number = serializers.PrimaryKeyRelatedField(queryset=DefaultVoyage.objects.all())
-    default_voyage = serializers.SerializerMethodField()
-    date_departure = serializers.DateField()
-    bus_id = serializers.PrimaryKeyRelatedField(queryset=Bus.objects.all())
-    bus = serializers.SerializerMethodField()
     driver_id = serializers.PrimaryKeyRelatedField(queryset=Driver.objects.all())
+    bus_id = serializers.PrimaryKeyRelatedField(queryset=Bus.objects.all())
+    default_voyage = serializers.SerializerMethodField()
+    bus = serializers.SerializerMethodField()
     driver = serializers.SerializerMethodField()
-    available_tickets = serializers.IntegerField()
 
     def get_default_voyage(self, obj):
         dv = obj.voyage_number
@@ -28,24 +37,24 @@ class VoyageSerializer(serializers.Serializer):
         driver_data = DriverSerializer(driver).data
         return driver_data
 
-
-class DefaultVoyageSerializer(serializers.Serializer):
-    voyage_number = serializers.CharField(max_length=255)
-    time_departure = serializers.TimeField()
-    end_time_departure = serializers.TimeField()
-    days = serializers.IntegerField()
-    is_active = serializers.BooleanField(default=True)
+    class Meta:
+        model = Voyage
+        fields = "__all__"
 
 
-class BusSerializer(serializers.Serializer):
-    licence_plate = serializers.CharField(max_length=255)
-    sit_places = serializers.IntegerField()
-    is_broken = serializers.BooleanField(default=False)
+class DefaultVoyageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefaultVoyage
+        fields = "__all__"
 
 
-class DriverSerializer(serializers.Serializer):
-    first_name = serializers.CharField(max_length=255)
-    second_name = serializers.CharField(max_length=255)
-    third_name = serializers.CharField(max_length=255)
-    illness = serializers.BooleanField(default=False)
-    hours_worked = serializers.IntegerField()
+class BusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bus
+        fields = "__all__"
+
+
+class DriverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Driver
+        fields = "__all__"

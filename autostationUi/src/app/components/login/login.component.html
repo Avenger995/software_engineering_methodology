@@ -1,0 +1,23 @@
+<div class="text-center mt-4">
+    <h1 class="text-4xl font-bold mb-6">Авторизация</h1>
+    <form [formGroup]="formLogin" (ngSubmit)="submit()">
+        <mat-form-field class="max-w-xs">
+            <mat-label>Введите логин</mat-label>
+            <input 
+                matInput 
+                placeholder="Логин" 
+                formControlName="username">
+        </mat-form-field>
+        <br/>
+        <mat-form-field class="max-w-xs">
+            <mat-label>Введите пароль</mat-label>
+            <input
+                matInput 
+                type="password" 
+                placeholder="Пароль" 
+                formControlName="password">
+        </mat-form-field>
+        <br/>
+        <button mat-flat-button class="ok-button" color="primary">Авторизация</button>
+    </form>
+</div>
