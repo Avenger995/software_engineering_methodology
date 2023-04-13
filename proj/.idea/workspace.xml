@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a98d9b3-7675-422a-ade0-a2f31c23cbfa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/proj.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/proj.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../autostationUi/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../autostationUi/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../autostationUi/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../autostationUi/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../autostationUi/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../autostationUi/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../autostationUi/src/app/common/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../autostationUi/src/app/common/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../autostationUi/src/app/services/crud/crud.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../autostationUi/src/app/services/crud/crud.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autostation/autostation/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/autostation/autostation/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autostation/autostation/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/autostation/autostation/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/autostation/station/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/autostation/station/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/autostation/station/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/autostation/station/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autostation/station/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/autostation/station/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

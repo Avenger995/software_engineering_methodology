@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LocalStorageConstants, SitePath } from 'src/app/common/constants';
+import { Roles } from 'src/app/models/roles.enum';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -15,7 +18,8 @@ export class LoginComponent implements OnInit{
     password: new FormControl<string>('', [Validators.required]),    
   })
 
-  constructor(private _userService: UserService) {}
+  constructor(private _userService: UserService,
+    private router: Router) {}
 
   ngOnInit() {
     
@@ -28,5 +32,4 @@ export class LoginComponent implements OnInit{
     }
     this._userService.login(user);
   }
-
 }

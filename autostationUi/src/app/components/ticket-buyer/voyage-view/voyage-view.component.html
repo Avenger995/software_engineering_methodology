@@ -1,0 +1,36 @@
+<div class="mt-8">
+    <mat-card class="flex mx-auto shadow-2xl w-1/2" *ngIf="!isChoosed">
+        <mat-card-header >
+          <mat-card-title>Рейс: {{voyage.default_voyage.voyage_number}}</mat-card-title>
+          <mat-card-subtitle>Конечный пункт: {{voyage.default_voyage.destination}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <strong>Дата и время отправки: {{voyage.date_departure | date: 'dd.MM.yyyy'}} {{voyage.default_voyage.time_departure}}</strong>
+            <br/>
+            <strong>Дата и время прибытия: {{endDt | date: 'dd.MM.yyyy'}} {{voyage.default_voyage.end_time_departure}}</strong>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" (click)="isChoosed = !isChoosed">Оформить</button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card class="flex mx-auto shadow-2xl w-1/2" *ngIf="isChoosed">
+        <mat-card-header >
+          <mat-card-title class="">Рейс: {{voyage.default_voyage.voyage_number}}</mat-card-title>
+          <mat-card-subtitle>Конечный пункт: {{voyage.default_voyage.destination}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content align="center">
+          <strong>Введите количество</strong>
+      </mat-card-content>
+        <mat-card-actions align="end" >
+          <button mat-raised-button class="form-buttons" (click)="amount == 0 ? amount : amount = amount - 1">-</button>
+          <mat-form-field class="form-buttons w-10 mt-7">
+            <input matInput type="text" [(ngModel)]="amount">
+          </mat-form-field>
+          <button mat-raised-button class="form-buttons" (click)="amount < voyage.available_tickets ?  amount = amount + 1 : amount ">+</button>
+          <div class="ml-8">
+            <button mat-raised-button color="warn" (click)="cancel()" class="form-buttons">Отмена</button>
+            <button mat-raised-button color="primary" (click)="openDialog()" class="form-buttons" [disabled]="amount == 0">Подтверждаю</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+</div>

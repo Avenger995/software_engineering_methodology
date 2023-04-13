@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ErrorHandlerService } from '../error-handling/error-handler.service';
 import { Token } from 'src/app/models/token';
@@ -11,15 +11,25 @@ import { Observable } from 'rxjs';
 })
 export class CrudService {
 
+  commonOption: any;
+
   constructor(
     protected readonly httpClient: HttpClient,
-    protected readonly errorHandlerService: ErrorHandlerService
-  ) { }
+    protected readonly errorHandlerService: ErrorHandlerService) { 
+    this.commonOption = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+  }
 
   postToken(apiUrl: string, item: string, httpOptions: any): Observable<Token> {
     return this.httpClient
             .post<Token>(this.getAbsoluteUrl(apiUrl), item, httpOptions)
             .pipe(catchError(this.getErrorHandler('post', apiUrl).bind(this)));
+  }
+
+  getAll<T>(apiUrl: string): Observable<Array<T>> {
+    return this.httpClient.get<Array<T>>(this.getAbsoluteUrl(apiUrl), this.commonOption)
+            .pipe(catchError(this.getErrorHandler<Array<T>>('get', apiUrl).bind(this)))
   }
 
   protected getErrorHandler<T>(method: HttpMethod, apiUrl: string, result?: T)

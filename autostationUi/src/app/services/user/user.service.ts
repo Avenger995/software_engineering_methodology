@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user';
-import { ApiPath, LocalStorageConstants } from '../../common/constants';
+import { ApiPath, LocalStorageConstants, SitePath } from '../../common/constants';
 import { CrudService } from '../crud/crud.service';
 import { Token } from 'src/app/models/token';
+import { Roles } from 'src/app/models/roles.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class UserService {
   // сообщения об ошибках авторизации
   public errors: any = [];
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService,
+    private router: Router) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
@@ -61,7 +64,22 @@ export class UserService {
  
   private uploadData(token: Token) {
     localStorage.setItem(LocalStorageConstants.Token, JSON.stringify(token));
+    this.redirectAsUser();
   }
+  
+
+  redirectAsUser() {
+    if (localStorage.getItem(LocalStorageConstants.Token) != null){
+      if (this.isTicketBuyer) {
+        this.router.navigate(['/'+SitePath.TicketBuyer]);
+        return;
+      }
+    }
+  }
+
+  get isTicketBuyer() {
+    return Roles.TicketBuyer == JSON.parse(localStorage.getItem(LocalStorageConstants.Token) as string)['groups'][0]; 
+ }
 
   private updateData(token: Token) {
     let storage = JSON.parse(localStorage.getItem(LocalStorageConstants.Token)?.valueOf() as string);

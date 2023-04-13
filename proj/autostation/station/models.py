@@ -7,6 +7,7 @@ class DefaultVoyage(models.Model):
     end_time_departure = models.TimeField()
     days = models.PositiveSmallIntegerField()
     is_active = models.BooleanField(default=True)
+    destination = models.CharField(max_length=255)
 
     def __str__(self):
         return self.voyage_number
