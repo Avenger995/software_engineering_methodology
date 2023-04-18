@@ -1,0 +1,122 @@
+<mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24"></mat-spinner>
+<app-nav-bar style="float: left;"></app-nav-bar>
+<h1 class="text-4xl font-bold mb-10 mt-10 flex items-center justify-center">Редактирование водителей</h1>
+<div class="flex items-center justify-center">
+    <div class="relative overflow-x-auto">
+        <form [formGroup]="addForm">
+            <table class="w-6/12 text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            ID водителя
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Имя
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Фамилия
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Отчество
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Доступность
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Отработанные часы
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                        Действия
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let driver of drivers$ | async; let i=index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-lg">
+                        <ng-container *ngIf="activated!=i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{driver.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <label>{{driver.first_name}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{driver.second_name}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{driver.third_name}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-slide-toggle [checked]="!driver.illness" [disabled]="activated!=i+1">
+                                    {{!driver.illness ? 'Доступен' : 'Недоступен'}}
+                                </mat-slide-toggle>
+                            </td>
+                            <td  class="px-6 py-4">
+                                {{driver.hours_worked}}
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==0" (click)="activateDriver(driver, i+1)"><mat-icon>edit</mat-icon></button>
+                                    <button class="mx-3" *ngIf="activated==0" (click)="deleteDrvier(driver.id)"><mat-icon>delete</mat-icon></button>
+
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="activated==i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{currentDriver.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <input matInput placeholder="Имя" [(ngModel)]="currentDriver.first_name" [ngModelOptions]="{standalone: true}">
+                            </td>
+                            <td  class="px-6 py-4">
+                                <input matInput placeholder="Фамилия" [(ngModel)]="currentDriver.second_name" [ngModelOptions]="{standalone: true}">
+                            </td>
+                            <td  class="px-6 py-4">
+                                <input matInput placeholder="Отчество" [(ngModel)]="currentDriver.third_name" [ngModelOptions]="{standalone: true}">
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-slide-toggle [(ngModel)]="currentDriver.illness" [ngModelOptions]="{standalone: true}">
+                                    {{currentDriver.illness ? 'Доступен' : 'Недоступен'}}
+                                </mat-slide-toggle>
+                            </td>
+                            <td  class="px-6 py-4">
+                                {{currentDriver.hours_worked}}
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="updateDriver()"><mat-icon>check</mat-icon></button>
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="getData()"><mat-icon>cancel</mat-icon></button>
+
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr *ngIf="activated==0" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-lg">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
+                        <td class="px-6 py-4">
+                            <input matInput placeholder="Имя" formControlName="first_name">
+                        </td>
+                        <td  class="px-6 py-4">
+                            <input matInput placeholder="Фамилия"  formControlName="second_name">
+                        </td>
+                        <td  class="px-6 py-4">
+                            <input matInput placeholder="Отчество" formControlName="third_name">
+                        </td>
+                        <td  class="px-6 py-4">
+                            <mat-slide-toggle formControlName="illness">
+                                {{illness ? 'Доступен' : 'Недоступен'}}
+                            </mat-slide-toggle>
+                        </td>
+                        <td  class="px-6 py-4"></td>
+                        <td  class="px-6 py-4">
+                            <div class="flex items-center justify-center">
+                                <button class="mx-3" [disabled]="!addForm.valid" (click)="addNewDriver()"><mat-icon>add</mat-icon></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+

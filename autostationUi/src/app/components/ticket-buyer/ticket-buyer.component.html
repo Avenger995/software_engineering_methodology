@@ -1,14 +1,15 @@
 <mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24">
 </mat-spinner>
+
 <div class="ml-[450px] mt-8">
     <mat-form-field appearance="fill">
         <mat-label>Выберите дату</mat-label>
-        <input matInput [matDatepicker]="picker" disabled [min]="today">
+        <input matInput [matDatepicker]="picker" disabled [min]="today" [(ngModel)]="dt" (dateChange)="uploadData()">
         <mat-hint>дд/мм/гггг</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
     </mat-form-field>
 </div>
-<app-voyage-view *ngFor="let voyage of voyages$ | async" 
+<app-voyage-view *ngFor="let voyage of voyages$ | async"
     [voyage]="voyage">
 </app-voyage-view>

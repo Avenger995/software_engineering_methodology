@@ -1,5 +1,5 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
 import { Observable, tap } from 'rxjs';
 import { ApiPath } from 'src/app/common/constants';
 import { Voyage } from 'src/app/models/voyage';
@@ -16,13 +16,20 @@ export class TicketBuyerComponent implements OnInit{
   httpOptions: any;
   voyages$: Observable<Array<Voyage>>; 
   today: Date = new Date();
+  dt: Date = new Date();
 
-  constructor(private crudService:  CrudService){
+  constructor(private crudService:  CrudService,
+    private datePipe: DatePipe){
   }
 
   ngOnInit(): void {
+    this.uploadData();
+  }
+
+  uploadData(): void {
     this.isLoading = true;
-    this.voyages$ = this.crudService.getAll<Voyage>(ApiPath.GetAllVoyages).pipe(
+    this.voyages$ = this.crudService.getByDate<Voyage>(ApiPath.GetVoyagesByDate, 
+      this.datePipe.transform(this.dt, 'dd-MM-yyyy') as string).pipe(
       tap(() => this.isLoading = false)
     );
   }

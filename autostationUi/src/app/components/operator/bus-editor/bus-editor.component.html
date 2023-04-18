@@ -1,0 +1,100 @@
+<mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24"></mat-spinner>
+<app-nav-bar style="float: left;"></app-nav-bar>
+<h1 class="text-4xl font-bold mb-10 mt-10 flex items-center justify-center">Редактирование автобусов</h1>
+<div class="flex items-center justify-center">
+    <div class="relative overflow-x-auto">
+        <form [formGroup]="addForm">
+            <table class="w-6/12 text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            ID автобуса
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Номер
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Количество мест
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Сломан?
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Действия
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bus of buses$ | async; let i=index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-lg">
+                        <ng-container *ngIf="activated!=i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{bus.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <label>{{bus.licence_plate}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{bus.sit_places}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-slide-toggle [checked]="bus.is_broken" [disabled]="activated!=i+1">
+                                    {{bus.is_broken ? 'Сломан' : 'Не сломан'}}
+                                </mat-slide-toggle>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==0" (click)="activateBus(bus, i+1)"><mat-icon>edit</mat-icon></button>
+                                    <button class="mx-3" *ngIf="activated==0" (click)="deleteBus(bus.id)"><mat-icon>delete</mat-icon></button>
+
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="activated==i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{currentBus.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <input matInput placeholder="Номер" [(ngModel)]="currentBus.licence_plate" [ngModelOptions]="{standalone: true}">
+                            </td>
+                            <td  class="px-6 py-4">
+                                <input type="number" matInput placeholder="Количество мест" [(ngModel)]="currentBus.sit_places" [ngModelOptions]="{standalone: true}">
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-slide-toggle [(ngModel)]="currentBus.is_broken" [ngModelOptions]="{standalone: true}">
+                                    {{currentBus.is_broken ? 'Сломан' : 'Не сломан'}}
+                                </mat-slide-toggle>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="updateBus()"><mat-icon>check</mat-icon></button>
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="getData()"><mat-icon>cancel</mat-icon></button>
+
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr *ngIf="activated==0" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-lg">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
+                        <td class="px-6 py-4">
+                            <input matInput placeholder="Номер" formControlName="licence_plate">
+                        </td>
+                        <td  class="px-6 py-4">
+                            <input matInput type="number" placeholder="Количество мест"  formControlName="sit_places">
+                        </td>
+                        <td  class="px-6 py-4">
+                            <mat-slide-toggle formControlName="is_broken">
+                                {{isBroken ? 'Сломан' : 'Не сломан'}}
+                            </mat-slide-toggle>
+                        </td>
+                        <td  class="px-6 py-4"></td>
+                        <td  class="px-6 py-4">
+                            <div class="flex items-center justify-center">
+                                <button class="mx-3" [disabled]="!addForm.valid" (click)="addNewBus()"><mat-icon>add</mat-icon></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

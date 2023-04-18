@@ -18,13 +18,26 @@ export class VoyageViewComponent implements OnInit{
   endDt: Date;
   isChoosed: boolean = false;
   amount: number = 0;
+  isActual: boolean = true;
+  cost = 100
 
   constructor(public dialog: MatDialog,
     private router: Router){
   }
 
   ngOnInit(): void {
+    this.checkActuality();
     this.endDt = addDays(this.voyage.date_departure, this.voyage.default_voyage.days);
+  }
+
+  checkActuality(): void {
+    let dt = new Date();
+    let voyageDt = new Date(this.voyage.date_departure.toString() + ' ' + this.voyage.default_voyage.time_departure.toString());
+    if (voyageDt < dt || this.voyage.available_tickets < 1) {
+      this.isActual = false;
+      return;
+    }
+    this.isActual = true;
   }
 
   cancel(): void {
@@ -34,11 +47,12 @@ export class VoyageViewComponent implements OnInit{
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: {type: 1, qr: 'https://material.angular.io/components/dialog/overview'}
+      data: {type: 1, amount: this.amount, cost: this.cost, voyage: this.voyage}
     })
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/'+SitePath.BuyResult]);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.router.navigate(['/'+SitePath.BuyResult]); 
     });
   }
 }

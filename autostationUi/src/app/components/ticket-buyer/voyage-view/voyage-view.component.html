@@ -1,4 +1,4 @@
-<div class="mt-8">
+<div class="mt-8" *ngIf="isActual">
     <mat-card class="flex mx-auto shadow-2xl w-1/2" *ngIf="!isChoosed">
         <mat-card-header >
           <mat-card-title>Рейс: {{voyage.default_voyage.voyage_number}}</mat-card-title>
@@ -22,6 +22,7 @@
           <strong>Введите количество</strong>
       </mat-card-content>
         <mat-card-actions align="end" >
+          <p>Цена: {{cost*amount}} руб.</p>
           <button mat-raised-button class="form-buttons" (click)="amount == 0 ? amount : amount = amount - 1">-</button>
           <mat-form-field class="form-buttons w-10 mt-7">
             <input matInput type="text" [(ngModel)]="amount">

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/user';
 import { ApiPath, LocalStorageConstants, SitePath } from '../../common/constants';
@@ -68,17 +68,32 @@ export class UserService {
   }
   
 
-  redirectAsUser() {
+  public redirectAsUser() {
     if (localStorage.getItem(LocalStorageConstants.Token) != null){
       if (this.isTicketBuyer) {
         this.router.navigate(['/'+SitePath.TicketBuyer]);
         return;
       }
+      if (this.isViwer) {
+        this.router.navigate(['/'+SitePath.Viwer]);
+        return;
+      }
+      if (this.isOperator) {
+        this.router.navigate(['/'+SitePath.Operator])
+      }
     }
   }
 
   get isTicketBuyer() {
-    return Roles.TicketBuyer == JSON.parse(localStorage.getItem(LocalStorageConstants.Token) as string)['groups'][0]; 
+    return Roles.TicketBuyer === JSON.parse(localStorage.getItem(LocalStorageConstants.Token) as string)['groups'][0]; 
+ }
+
+ get isViwer() {
+    return Roles.Viwer === JSON.parse(localStorage.getItem(LocalStorageConstants.Token) as string)['groups'][0]; 
+ }
+
+ get isOperator() {
+    return Roles.Operator === JSON.parse(localStorage.getItem(LocalStorageConstants.Token) as string)['groups'][0]
  }
 
   private updateData(token: Token) {

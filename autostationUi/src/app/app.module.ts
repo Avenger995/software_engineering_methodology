@@ -21,8 +21,17 @@ import { BuyResultComponent } from './components/ticket-buyer/buy-result/buy-res
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { MomentUtcDateAdapter } from './utils/moment-utc-date-adapter';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { APP_DATE_FORMATS, AppDateAdapter } from './utils/date.adapter';
+import { ViwerComponent } from './components/viwer/viwer.component';
+import { OperatorComponent } from './components/operator/operator.component';
+import { NavBarComponent } from './common/nav-bar/nav-bar.component';
+import { DriverEditorComponent } from './components/operator/driver-editor/driver-editor.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { BusEditorComponent } from './components/operator/bus-editor/bus-editor.component';
+import { VoyageEditorComponent } from './components/operator/voyage-editor/voyage-editor.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,7 +41,13 @@ import { APP_DATE_FORMATS, AppDateAdapter } from './utils/date.adapter';
     TicketBuyerComponent,
     VoyageViewComponent,
     DialogComponent,
-    BuyResultComponent
+    BuyResultComponent,
+    ViwerComponent,
+    OperatorComponent,
+    NavBarComponent,
+    DriverEditorComponent,
+    BusEditorComponent,
+    VoyageEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +63,11 @@ import { APP_DATE_FORMATS, AppDateAdapter } from './utils/date.adapter';
     MatCardModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    MatSelectModule
   ],
   providers: [ErrorHandlerDescriptor,
     DatePipe,

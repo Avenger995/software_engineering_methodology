@@ -1,0 +1,39 @@
+<mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24">
+</mat-spinner>
+<h1 class="text-4xl font-bold mb-10 mt-10 text-center">Табло с рейсами</h1>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-2xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Номер рейса
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Назначение
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Дата и время отправления
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Номер автобуса
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let voyage of voyages$ | async" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-2xl">
+                <th *ngIf="fullDate(voyage) >= now" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{voyage.default_voyage.voyage_number}}
+                </th>
+                <td *ngIf="fullDate(voyage) >= now" class="px-6 py-4">
+                    {{voyage.default_voyage.destination}}
+                </td>
+                <td *ngIf="fullDate(voyage) >= now" class="px-6 py-4">
+                    {{voyage.date_departure | date: 'dd.MM.yyyy'}} {{voyage.default_voyage.time_departure}}
+                </td>
+                <td *ngIf="fullDate(voyage) >= now" class="px-6 py-4">
+                    {{voyage.bus.licence_plate}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

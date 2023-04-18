@@ -1,1 +1,8 @@
-<h1 mat-dialog-title>Hi {{data.qr}}</h1>
+<mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24">
+</mat-spinner>
+<div *ngIf="!isLoading">
+<strong class="ml-4 mt-4">Отсканируйте QR-код для оплаты</strong>
+<img class="object-center" [src]="imgDecode" />
+<button (click)="onYesClick()">TEST</button>
+<button mat-raised-button style="float:right;" color="warn" (click)="onNoClick()" class="form-buttons m-1">Отмена</button>
+</div>

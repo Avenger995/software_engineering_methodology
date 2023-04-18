@@ -36,8 +36,8 @@ class Driver(models.Model):
 class Voyage(models.Model):
     voyage_number = models.ForeignKey('DefaultVoyage', on_delete=models.PROTECT, null=False)
     date_departure = models.DateField()
-    bus_id = models.ForeignKey('Bus', on_delete=models.PROTECT, null=False)
-    driver_id = models.ForeignKey('Driver', on_delete=models.PROTECT, null=False)
+    bus_id = models.ForeignKey('Bus', on_delete=models.PROTECT, null=True)
+    driver_id = models.ForeignKey('Driver', on_delete=models.PROTECT, null=True)
     available_tickets = models.PositiveSmallIntegerField()
 
     def __str__(self):

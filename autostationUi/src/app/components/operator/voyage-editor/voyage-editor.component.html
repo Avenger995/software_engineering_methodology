@@ -1,0 +1,94 @@
+<mat-spinner *ngIf="isLoading" class="absolute top-1/2 left-1/2 transform mt-24"></mat-spinner>
+<app-nav-bar style="float: left;"></app-nav-bar>
+<h1 class="text-4xl font-bold mb-10 mt-10 flex items-center justify-center">Редактирование рейсов</h1>
+<div class="ml-[450px] mt-8" *ngIf="activated==0">
+    <mat-form-field appearance="fill">
+        <mat-label>Выберите дату</mat-label>
+        <input matInput [matDatepicker]="picker" disabled [min]="today" [(ngModel)]="dt" (dateChange)="getData()">
+        <mat-hint>дд/мм/гггг</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+</div>
+<div class="flex items-center justify-center">
+    <div class="relative overflow-x-auto">
+        <form>
+            <table class="w-6/12 text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">ID рейса</th>
+                        <th scope="col" class="px-6 py-3">Номер рейса</th>
+                        <th scope="col" class="px-6 py-3">Пункт назначения</th>
+                        <th scope="col" class="px-6 py-3">Время отправления</th>
+                        <th scope="col" class="px-6 py-3">Водитель</th>
+                        <th scope="col" class="px-6 py-3">Автобус</th>
+                        <th scope="col" class="px-6 py-3">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let voyage of voyages$ | async; let i=index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-lg">
+                        <ng-container *ngIf="activated!=i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{voyage.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <label>{{voyage.default_voyage.voyage_number}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.default_voyage.destination}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.default_voyage.time_departure}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.driver.first_name}} {{voyage.driver.second_name}} {{voyage.driver.third_name}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.bus.licence_plate}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==0" (click)="prepareNewVoyage(voyage, i)"><mat-icon>edit</mat-icon></button>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="activated==i+1">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{voyage.id}}
+                            </th>
+                            <td class="px-6 py-4">
+                                <label>{{voyage.default_voyage.voyage_number}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.default_voyage.destination}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <label>{{voyage.default_voyage.time_departure}}</label>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-select style="width: 250px" [(ngModel)]="newVoyage.driver_id" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let driver of allowDrivers" [value]="driver.id">
+                                        {{driver.first_name}} {{driver.second_name}} {{driver.third_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <mat-select style="width: 200px" [(ngModel)]="newVoyage.bus_id" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let bus of allowBuses" [value]="bus.id">
+                                        {{bus.licence_plate}}
+                                    </mat-option>
+                                </mat-select>
+                            </td>
+                            <td  class="px-6 py-4">
+                                <div class="flex items-center justify-center">
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="uploadData()"><mat-icon>check</mat-icon></button>
+                                    <button class="mx-3" *ngIf="activated==i+1" (click)="getData()"><mat-icon>cancel</mat-icon></button>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

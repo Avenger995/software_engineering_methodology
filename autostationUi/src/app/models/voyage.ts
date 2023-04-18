@@ -1,5 +1,6 @@
 import { Bus } from "./bus";
 import { DefaultVoyage } from "./default-voyage";
+import { Driver } from "./driver";
 
 export interface Voyage {
     id: number;
@@ -7,4 +8,7 @@ export interface Voyage {
     bus: Bus;
     date_departure: Date;
     available_tickets: number;
+    driver: Driver;
+    bus_id: number;
+    driver_id: number;
 }

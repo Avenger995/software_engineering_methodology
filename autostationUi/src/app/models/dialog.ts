@@ -1,9 +1,15 @@
+import { Voyage } from "./voyage";
+
 export interface DialogData {
     type: number;
-    qr: string;
+    amount: number;
+    cost: number;
+    voyage: Voyage
 }
 
 export class DialogOverview {
     type: number;
-    qr: string;
+    amount: number;
+    cost: number;
+    voyage: Voyage;
 }
