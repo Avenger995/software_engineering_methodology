@@ -1,0 +1,42 @@
+@startuml
+' UML legend:
+' table = class
+' #pkey
+' -fkey
+' +index
+
+actor Пользователь as User
+
+package UI {
+  package Компоненты {
+    component TicketBuyerComponent 
+    component ViewerComponent  
+    component VoyageEditorComponent
+  }
+  component CrudService
+}
+
+User <--> TicketBuyerComponent
+User <--> ViewerComponent
+User <--> VoyageEditorComponent
+TicketBuyerComponent <--> CrudService
+ViewerComponent <--> CrudService
+VoyageEditorComponent <--> CrudService
+
+package API {
+  component Urls
+  component Views
+  component Serializers
+  component Models
+}
+
+CrudService <--> Urls
+Urls <--> Views
+Views <--> Serializers
+Serializers <--> Models
+
+database БД as Db
+
+Models <--> Db
+
+@enduml

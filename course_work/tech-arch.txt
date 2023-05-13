@@ -1,0 +1,21 @@
+@startuml
+' UML legend:
+' table = class
+' #pkey
+' -fkey
+' +index
+
+actor ПКПользователя as User
+database БД as Db
+
+package Docker {
+  component UI
+  component API
+}
+
+User <--> UI
+UI <--> API
+API <--> Db
+
+
+@enduml
